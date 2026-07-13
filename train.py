@@ -237,7 +237,7 @@ if __name__ == "__main__":
     EVAL_EPISODES = 3
     DEVICE = "auto"
 
-    # ─── Kumi Yunis: CnnPolicy (10 experiments) ───
+    Kumi Yunis: CnnPolicy (10 experiments) ───
     kumi_experiments = [
         HyperParams(1e-4,   0.99,  32, 1.0, 0.10, 0.10),   # 1: baseline
         HyperParams(5e-4,   0.99,  32, 1.0, 0.10, 0.10),   # 2: higher lr
@@ -261,20 +261,29 @@ if __name__ == "__main__":
         eval_freq=EVAL_FREQ, eval_episodes=EVAL_EPISODES, device=DEVICE,
     )
 
-    # ─── Nformi Modestine: CnnPolicy (10 experiments) — add later ───
-    # nformi_experiments = [
-    #     HyperParams(...),  # 1
-    #     ...
-    # ]
-    # nformi_rows, nformi_best = run_member_experiments(
-    #     member_name="Nformi_Modestine",
-    #     experiments=nformi_experiments,
-    #     policy="CnnPolicy",
-    #     output_dir="runs_nformi_dqn",
-    #     env_id=ENV_ID, total_timesteps=TOTAL_TIMESTEPS,
-    #     n_envs=N_ENVS, frame_stack=FRAME_STACK, seed=SEED + 100,
-    #     eval_freq=EVAL_FREQ, eval_episodes=EVAL_EPISODES, device=DEVICE,
-    # )
+   #Nformi Modestine: CnnPolicy (10 experiments)8
+    nformi_experiments = [
+        HyperParams(1e-4,   0.99,  16,  1.0, 0.10, 0.10),   # 1: smaller batch than baseline
+        HyperParams(1e-4,   0.99,  128, 1.0, 0.10, 0.10),   # 2: much larger batch
+        HyperParams(3e-4,   0.99,  32,  1.0, 0.10, 0.10),   # 3: moderately higher lr than baseline
+        HyperParams(1e-4,   0.90,  32,  1.0, 0.10, 0.10),   # 4: much lower gamma
+        HyperParams(1e-4,   0.99,  32,  0.5, 0.10, 0.10),   # 5: lower initial epsilon (less early exploring)
+        HyperParams(1e-4,   0.99,  32,  1.0, 0.10, 0.05),   # 6: very short exploration fraction
+        HyperParams(1e-4,   0.99,  32,  1.0, 0.01, 0.10),   # 7: very low epsilon_end
+        HyperParams(6.25e-5,0.99,  32,  1.0, 0.10, 0.10),   # 8: lower lr than baseline
+        HyperParams(1e-4,   0.99,  64,  1.0, 0.05, 0.20),   # 9: bigger batch + longer explore + lower eps_end
+        HyperParams(2.5e-4, 0.98,  64,  1.0, 0.10, 0.15),   # 10: combined moderate tweak
+    ]
+
+    nformi_rows, nformi_best = run_member_experiments(
+        member_name="Nformi_Modestine",
+        experiments=nformi_experiments,
+        policy="CnnPolicy",
+        output_dir="runs_nformi_dqn",
+        env_id=ENV_ID, total_timesteps=TOTAL_TIMESTEPS,
+        n_envs=N_ENVS, frame_stack=FRAME_STACK, seed=SEED + 100,
+        eval_freq= EVAL_FREQ, eval_episodes= EVAL_EPISODES, device=DEVICE,
+    )
 
     # ─── Josue Byiringiro: MlpPolicy (10 experiments) — add later ───
     # josue_experiments = [
@@ -295,7 +304,7 @@ if __name__ == "__main__":
     all_rows = kumi_rows  # add: + nformi_rows + josue_rows
     candidates = [
         ("Kumi_Yunis", kumi_best, "runs_kumi_dqn"),
-        # ("Nformi_Modestine", nformi_best, "runs_nformi_dqn"),
+        ("Nformi_Modestine", nformi_best, "runs_nformi_dqn"),
         # ("Josue_Byiringiro", josue_best, "runs_josue_dqn"),
     ]
 
