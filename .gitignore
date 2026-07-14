@@ -1,0 +1,23 @@
+# ─── Python ───
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ─── Virtual environments ───
+venv/
+.venv/
+env/
+ENV/
+
+# ─── OS / editor ───
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# NB: trained models (runs_*/**/dqn_model.zip, dqn_model.zip) and TensorBoard
+# logs are intentionally committed — the assignment requires the policy zip in
+# the repo, so they are NOT ignored here.
