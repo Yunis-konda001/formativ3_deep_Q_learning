@@ -6,7 +6,7 @@ Atari game using [Stable Baselines3](https://stable-baselines3.readthedocs.io/) 
 [Gymnasium](https://gymnasium.farama.org/). The project compares **MlpPolicy** and
 **CnnPolicy** architectures and documents a hyperparameter tuning study.
 
----
+Game video link: (*we have to add the video of our game)*
 
 ## The Environment — Freeway
 
@@ -21,8 +21,6 @@ must cross a busy multi-lane highway from bottom to top without being hit by tra
 
 The higher the mean reward, the more successful crossings the agent completes.
 
----
-
 ## Team & Policy Assignments
 
 Each member ran **10 hyperparameter experiments** (10 distinct combinations).
@@ -32,8 +30,6 @@ Each member ran **10 hyperparameter experiments** (10 distinct combinations).
 | Kumi Yunis       | `CnnPolicy` | RGB frames  | `runs_kumi_dqn/`    |
 | Nformi Modestine | `CnnPolicy` | RGB frames  | `runs_nformi_dqn/`  |
 | Josue Byiringiro | `MlpPolicy` | RAM state   | `runs_josue_dqn/`   |
-
----
 
 ## Project Structure
 
@@ -54,8 +50,6 @@ Each per-experiment run directory contains:
 `episode_log.csv` (per-episode reward + length), `run_metadata.json`,
 `best/` (EvalCallback best model), and `tb/` (TensorBoard logs).
 
----
-
 ## Setup
 
 ```bash
@@ -69,8 +63,6 @@ pip install -r requirements.txt
 
 **Dependencies:** `gymnasium[atari,accept-rom-license]`, `stable-baselines3`,
 `ale-py`, `shimmy`, `tensorboard`, `matplotlib`, `pandas`.
-
----
 
 ## Task 1 — Training (`train.py`)
 
@@ -110,8 +102,6 @@ View training curves with TensorBoard:
 tensorboard --logdir runs_kumi_dqn/Kumi_Yunis_exp2/tb
 ```
 
----
-
 ## Task 2 — Playing (`play.py`)
 
 Loads a trained model and plays Freeway using a **Greedy Q-policy**
@@ -127,14 +117,12 @@ python play.py josue      # plays Josue's best model
 
 It runs 5 episodes and prints the reward per episode plus the average.
 
----
-
 ## Task 3 — Hyperparameter Tuning Study
 
-> **Note on naming:** the assignment's `epsilon_decay` corresponds to
-> `exploration_fraction` in Stable Baselines3 — the fraction of total training
-> over which ε linearly decays from `epsilon_start` to `epsilon_end`. A larger
-> value means slower decay / more exploration.
+**Note on naming:** the assignment's `epsilon_decay` corresponds to
+`exploration_fraction` in Stable Baselines3 — the fraction of total training
+over which ε linearly decays from `epsilon_start` to `epsilon_end`. A larger
+value means slower decay / more exploration.
 
 ### Kumi Yunis — `CnnPolicy` 
 
@@ -197,15 +185,13 @@ showing a **large batch can compensate for a small learning rate** by giving mor
 gradient estimates. Configs that starved exploration (Exp 7, eps_end 0.01) or lowered
 the lr further (Exp 8) were weak/unstable, and low gamma (Exp 4) failed entirely.
 
----
-
 ## Results
 
-| Member                        | Policy        | Best Mean Reward        | Best Config                                             |
-| ----------------------------- | ------------- | ----------------------- | ------------------------------------------------------- |
-| **Nformi Modestine** 🏆 | `CnnPolicy` | **24.67 ± 1.89** | lr=3e-4, gamma=0.99, batch=32, eps 1.0→0.10, frac=0.10 |
-| Kumi Yunis                    | `CnnPolicy` | 22.00 ± 1.41           | lr=5e-4, gamma=0.99, batch=32, eps 1.0→0.10, frac=0.10 |
-| Josue Byiringiro              | `MlpPolicy` | 18.33 ± 1.25           | lr=5e-4, gamma=0.99, batch=32, eps 1.0→0.10, frac=0.10 |
+| Member                       | Policy        | Best Mean Reward        | Best Config                                             |
+| ---------------------------- | ------------- | ----------------------- | ------------------------------------------------------- |
+| **Nformi Modestine**  | `CnnPolicy` | **24.67 ± 1.89** | lr=3e-4, gamma=0.99, batch=32, eps 1.0→0.10, frac=0.10 |
+| Kumi Yunis                   | `CnnPolicy` | 22.00 ± 1.41           | lr=5e-4, gamma=0.99, batch=32, eps 1.0→0.10, frac=0.10 |
+| Josue Byiringiro             | `MlpPolicy` | 18.33 ± 1.25           | lr=5e-4, gamma=0.99, batch=32, eps 1.0→0.10, frac=0.10 |
 
 **Best overall model: Nformi Modestine's `CnnPolicy` (lr=3e-4), mean reward 24.67.**
 It is saved to `dqn_model.zip` and `best_overall_model/`, with its configuration in
@@ -215,14 +201,10 @@ pixel input suits Freeway better than the RAM state — though all three converg
 same lesson: a **learning rate in the `3e-4`–`5e-4` range is essential**; anything at
 `1e-4` or below mostly failed to learn within the 100k-step budget.
 
----
-
 ## Gameplay Video
 
 We need to add a short recording of `play.py` running with
 the agent crossing the road in Freeway.
-
----
 
 ## Policy Architecture Note (MLP vs CNN)
 
