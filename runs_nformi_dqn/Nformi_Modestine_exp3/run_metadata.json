@@ -3,13 +3,13 @@
   "policy": "CnnPolicy",
   "obs_type": "rgb",
   "hyperparameters": {
-    "lr": 0.0001,
+    "lr": 0.0003,
     "gamma": 0.99,
-    "batch_size": 64,
+    "batch_size": 32,
     "epsilon_start": 1.0,
-    "epsilon_end": 0.05,
-    "epsilon_fraction": 0.2
+    "epsilon_end": 0.1,
+    "epsilon_fraction": 0.1
   },
-  "mean_reward": 7.666666507720947,
-  "std_reward": 1.2472190856933594
+  "mean_reward": 24.66666603088379,
+  "std_reward": 1.8856180906295776
 }

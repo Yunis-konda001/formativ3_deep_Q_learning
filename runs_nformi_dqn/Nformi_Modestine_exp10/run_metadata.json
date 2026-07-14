@@ -1,0 +1,15 @@
+{
+  "env_id": "ALE/Freeway-v5",
+  "policy": "CnnPolicy",
+  "obs_type": "rgb",
+  "hyperparameters": {
+    "lr": 0.00025,
+    "gamma": 0.98,
+    "batch_size": 64,
+    "epsilon_start": 1.0,
+    "epsilon_end": 0.1,
+    "epsilon_fraction": 0.15
+  },
+  "mean_reward": 22.0,
+  "std_reward": 2.1602468490600586
+}

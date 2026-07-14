@@ -1,0 +1,11 @@
+experiment,member,policy,lr,gamma,batch_size,epsilon_start,epsilon_end,epsilon_fraction,mean_reward,std_reward
+1,Nformi_Modestine,CnnPolicy,0.0001,0.99,16,1.0,0.1,0.1,0.0,0.0
+2,Nformi_Modestine,CnnPolicy,0.0001,0.99,128,1.0,0.1,0.1,18.0,0.8164966106414795
+3,Nformi_Modestine,CnnPolicy,0.0003,0.99,32,1.0,0.1,0.1,24.66666603088379,1.8856180906295776
+4,Nformi_Modestine,CnnPolicy,0.0001,0.9,32,1.0,0.1,0.1,0.0,0.0
+5,Nformi_Modestine,CnnPolicy,0.0001,0.99,32,0.5,0.1,0.1,13.0,2.4494898319244385
+6,Nformi_Modestine,CnnPolicy,0.0001,0.99,32,1.0,0.1,0.05,18.0,2.4494898319244385
+7,Nformi_Modestine,CnnPolicy,0.0001,0.99,32,1.0,0.01,0.1,5.0,1.632993221282959
+8,Nformi_Modestine,CnnPolicy,6.25e-05,0.99,32,1.0,0.1,0.1,6.333333492279053,4.496912479400635
+9,Nformi_Modestine,CnnPolicy,0.0001,0.99,64,1.0,0.05,0.2,15.333333015441895,2.054804563522339
+10,Nformi_Modestine,CnnPolicy,0.00025,0.98,64,1.0,0.1,0.15,22.0,2.1602468490600586

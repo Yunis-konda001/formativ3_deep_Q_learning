@@ -10,6 +10,6 @@
     "epsilon_end": 0.05,
     "epsilon_fraction": 0.1
   },
-  "mean_reward": 6.0,
+  "mean_reward": 15.0,
   "std_reward": 0.8164966106414795
 }
