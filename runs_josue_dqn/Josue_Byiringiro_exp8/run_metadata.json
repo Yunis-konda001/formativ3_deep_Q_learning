@@ -1,0 +1,15 @@
+{
+  "env_id": "ALE/Freeway-v5",
+  "policy": "MlpPolicy",
+  "obs_type": "ram",
+  "hyperparameters": {
+    "lr": 0.0001,
+    "gamma": 0.99,
+    "batch_size": 32,
+    "epsilon_start": 1.0,
+    "epsilon_end": 0.1,
+    "epsilon_fraction": 0.3
+  },
+  "mean_reward": 0.0,
+  "std_reward": 0.0
+}
