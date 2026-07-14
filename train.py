@@ -237,7 +237,7 @@ if __name__ == "__main__":
     EVAL_EPISODES = 3
     DEVICE = "auto"
 
-    Kumi Yunis: CnnPolicy (10 experiments) ───
+    # ─── Kumi Yunis: CnnPolicy (10 experiments) ───
     kumi_experiments = [
         HyperParams(1e-4,   0.99,  32, 1.0, 0.10, 0.10),   # 1: baseline
         HyperParams(5e-4,   0.99,  32, 1.0, 0.10, 0.10),   # 2: higher lr
@@ -261,7 +261,7 @@ if __name__ == "__main__":
         eval_freq=EVAL_FREQ, eval_episodes=EVAL_EPISODES, device=DEVICE,
     )
 
-   #Nformi Modestine: CnnPolicy (10 experiments)8
+    # ─── Nformi Modestine: CnnPolicy (10 experiments) ───
     nformi_experiments = [
         HyperParams(1e-4,   0.99,  16,  1.0, 0.10, 0.10),   # 1: smaller batch than baseline
         HyperParams(1e-4,   0.99,  128, 1.0, 0.10, 0.10),   # 2: much larger batch
@@ -285,27 +285,36 @@ if __name__ == "__main__":
         eval_freq= EVAL_FREQ, eval_episodes= EVAL_EPISODES, device=DEVICE,
     )
 
-    # ─── Josue Byiringiro: MlpPolicy (10 experiments) — add later ───
-    # josue_experiments = [
-    #     HyperParams(...),  # 1
-    #     ...
-    # ]
-    # josue_rows, josue_best = run_member_experiments(
-    #     member_name="Josue_Byiringiro",
-    #     experiments=josue_experiments,
-    #     policy="MlpPolicy",
-    #     output_dir="runs_josue_dqn",
-    #     env_id=ENV_ID, total_timesteps=TOTAL_TIMESTEPS,
-    #     n_envs=N_ENVS, frame_stack=FRAME_STACK, seed=SEED + 200,
-    #     eval_freq=EVAL_FREQ, eval_episodes=EVAL_EPISODES, device=DEVICE,
-    # )
+    # ─── Josue Byiringiro: MlpPolicy (10 experiments) ───
+    josue_experiments = [
+        HyperParams(1e-4,   0.99,  32, 1.0, 0.10, 0.10),   # 1: baseline
+        HyperParams(5e-4,   0.99,  32, 1.0, 0.10, 0.10),   # 2: higher lr
+        HyperParams(1e-3,   0.99,  32, 1.0, 0.10, 0.10),   # 3: aggressive lr
+        HyperParams(1e-4,   0.90,  32, 1.0, 0.10, 0.10),   # 4: lower gamma (short-sighted)
+        HyperParams(1e-4,   0.999, 32, 1.0, 0.10, 0.10),   # 5: higher gamma (far-sighted)
+        HyperParams(1e-4,   0.99, 128, 1.0, 0.10, 0.10),   # 6: larger batch
+        HyperParams(1e-4,   0.99,  32, 1.0, 0.01, 0.10),   # 7: very low eps_end (more greedy)
+        HyperParams(1e-4,   0.99,  32, 1.0, 0.10, 0.30),   # 8: longer exploration
+        HyperParams(2.5e-4, 0.99,  64, 1.0, 0.05, 0.20),   # 9: medium lr + long explore combo
+        HyperParams(5e-5,   0.995, 64, 1.0, 0.05, 0.15),   # 10: conservative combo
+    ]
+
+    josue_rows, josue_best = run_member_experiments(
+        member_name="Josue_Byiringiro",
+        experiments=josue_experiments,
+        policy="MlpPolicy",
+        output_dir="runs_josue_dqn",
+        env_id=ENV_ID, total_timesteps=TOTAL_TIMESTEPS,
+        n_envs=N_ENVS, frame_stack=FRAME_STACK, seed=SEED + 200,
+        eval_freq=EVAL_FREQ, eval_episodes=EVAL_EPISODES, device=DEVICE,
+    )
 
     # ─── Save best model (update when all members have run) ───
-    all_rows = kumi_rows  # add: + nformi_rows + josue_rows
+    all_rows = kumi_rows + nformi_rows + josue_rows
     candidates = [
         ("Kumi_Yunis", kumi_best, "runs_kumi_dqn"),
         ("Nformi_Modestine", nformi_best, "runs_nformi_dqn"),
-        # ("Josue_Byiringiro", josue_best, "runs_josue_dqn"),
+        ("Josue_Byiringiro", josue_best, "runs_josue_dqn"),
     ]
 
     winner_name, winner_data, winner_dir = max(candidates, key=lambda c: c[1]["mean_reward"])
