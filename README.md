@@ -186,10 +186,6 @@ The video shows `play.py` running with the best model on Freeway (Greedy Q-polic
 - Location: `video/freeway_play.mp4`
 - YouTube link: [https://youtu.be/YjOYt_grD0Y](https://youtu.be/YjOYt_grD0Y)
 
-Video link: *(add link after recording)*
-
----
-
 ## Project Files
 
 | File / folder                   | What it is                             |
