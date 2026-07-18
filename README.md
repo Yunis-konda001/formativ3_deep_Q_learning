@@ -4,10 +4,10 @@ Train and evaluate a **DQN** agent on **ALE/Freeway-v5** using Stable Baselines3
 
 **Team**
 
-| Member | Policy | Role |
-| ------ | ------ | ---- |
-| Kumi Yunis | CnnPolicy | 10 hyperparameter experiments |
-| Nformi Modestine | CnnPolicy | 10 hyperparameter experiments |
+| Member           | Policy    | Role                               |
+| ---------------- | --------- | ---------------------------------- |
+| Kumi Yunis       | CnnPolicy | 10 hyperparameter experiments      |
+| Nformi Modestine | CnnPolicy | 10 hyperparameter experiments      |
 | Josue Byiringiro | MlpPolicy | 10 hyperparameter experiments (v2) |
 
 ---
@@ -25,11 +25,11 @@ The agent controls a chicken that must cross a busy road.
 
 ## Team and Policies
 
-| Member | Policy | Observation | Results folder |
-| ------ | ------ | ----------- | -------------- |
-| Kumi Yunis | CnnPolicy | RGB frames | `runs_kumi_dqn/` |
-| Nformi Modestine | CnnPolicy | RGB frames | `runs_nformi_dqn/` |
-| Josue Byiringiro | MlpPolicy | RAM state | `runs_josue_v2/` |
+| Member           | Policy    | Observation | Results folder       |
+| ---------------- | --------- | ----------- | -------------------- |
+| Kumi Yunis       | CnnPolicy | RGB frames  | `runs_kumi_dqn/`   |
+| Nformi Modestine | CnnPolicy | RGB frames  | `runs_nformi_dqn/` |
+| Josue Byiringiro | MlpPolicy | RAM state   | `runs_josue_v2/`   |
 
 Each member tested **10 different hyperparameter combinations**.
 
@@ -63,18 +63,18 @@ python play.py josue
 
 ### Kumi Yunis — CnnPolicy (100k steps)
 
-| Exp | lr | gamma | batch | eps_start | eps_end | eps_fraction | Mean Reward | Noted Behavior |
-| --- | -- | ----- | ----- | --------- | ------- | ------------ | ----------- | -------------- |
-| 1 | 1e-4 | 0.99 | 32 | 1.0 | 0.10 | 0.10 | 1.33 | Baseline. Learning rate too low — barely learned. |
-| 2 | 5e-4 | 0.99 | 32 | 1.0 | 0.10 | 0.10 | **22.00** | **Best for Kumi.** Higher lr learned fast and well. |
-| 3 | 2.5e-4 | 0.99 | 32 | 1.0 | 0.10 | 0.10 | 20.67 | Medium lr — almost as strong as Exp 2. |
-| 4 | 1e-4 | 0.95 | 32 | 1.0 | 0.10 | 0.10 | 0.00 | Low gamma — agent too short-sighted for Freeway. |
-| 5 | 1e-4 | 0.999 | 32 | 1.0 | 0.10 | 0.10 | 0.67 | Very high gamma + low lr — almost no learning. |
-| 6 | 1e-4 | 0.99 | 64 | 1.0 | 0.10 | 0.10 | 17.33 | Larger batch helped a lot vs baseline. |
-| 7 | 1e-4 | 0.99 | 32 | 1.0 | 0.05 | 0.10 | 15.00 | Lower eps_end (more greedy) helped vs baseline. |
-| 8 | 1e-4 | 0.99 | 32 | 1.0 | 0.10 | 0.20 | 9.00 | Longer exploration — some gain, high variance. |
-| 9 | 1e-4 | 0.99 | 32 | 1.0 | 0.02 | 0.25 | 0.00 | Long explore + very low eps_end at low lr — failed. |
-| 10 | 5e-5 | 0.995 | 64 | 1.0 | 0.05 | 0.15 | 20.33 | Conservative combo — surprisingly strong. |
+| Exp | lr     | gamma | batch | eps_start | eps_end | eps_fraction | Mean Reward     | Noted Behavior                                            |
+| --- | ------ | ----- | ----- | --------- | ------- | ------------ | --------------- | --------------------------------------------------------- |
+| 1   | 1e-4   | 0.99  | 32    | 1.0       | 0.10    | 0.10         | 1.33            | Baseline. Learning rate too low — barely learned.        |
+| 2   | 5e-4   | 0.99  | 32    | 1.0       | 0.10    | 0.10         | **22.00** | **Best for Kumi.** Higher lr learned fast and well. |
+| 3   | 2.5e-4 | 0.99  | 32    | 1.0       | 0.10    | 0.10         | 20.67           | Medium lr — almost as strong as Exp 2.                   |
+| 4   | 1e-4   | 0.95  | 32    | 1.0       | 0.10    | 0.10         | 0.00            | Low gamma — agent too short-sighted for Freeway.         |
+| 5   | 1e-4   | 0.999 | 32    | 1.0       | 0.10    | 0.10         | 0.67            | Very high gamma + low lr — almost no learning.           |
+| 6   | 1e-4   | 0.99  | 64    | 1.0       | 0.10    | 0.10         | 17.33           | Larger batch helped a lot vs baseline.                    |
+| 7   | 1e-4   | 0.99  | 32    | 1.0       | 0.05    | 0.10         | 15.00           | Lower eps_end (more greedy) helped vs baseline.           |
+| 8   | 1e-4   | 0.99  | 32    | 1.0       | 0.10    | 0.20         | 9.00            | Longer exploration — some gain, high variance.           |
+| 9   | 1e-4   | 0.99  | 32    | 1.0       | 0.02    | 0.25         | 0.00            | Long explore + very low eps_end at low lr — failed.      |
+| 10  | 5e-5   | 0.995 | 64    | 1.0       | 0.05    | 0.15         | 20.33           | Conservative combo — surprisingly strong.                |
 
 **Key insights (Kumi)**
 
@@ -87,18 +87,18 @@ python play.py josue
 
 ### Nformi Modestine — CnnPolicy (100k steps)
 
-| Exp | lr | gamma | batch | eps_start | eps_end | eps_fraction | Mean Reward | Noted Behavior |
-| --- | -- | ----- | ----- | --------- | ------- | ------------ | ----------- | -------------- |
-| 1 | 1e-4 | 0.99 | 16 | 1.0 | 0.10 | 0.10 | 0.00 | Small batch + low lr — never learned to cross. |
-| 2 | 1e-4 | 0.99 | 128 | 1.0 | 0.10 | 0.10 | 18.00 | Large batch rescued the low lr — strong and stable. |
-| 3 | 3e-4 | 0.99 | 32 | 1.0 | 0.10 | 0.10 | **24.67** | **Best overall.** Moderately higher lr was the sweet spot. |
-| 4 | 1e-4 | 0.90 | 32 | 1.0 | 0.10 | 0.10 | 0.00 | Much lower gamma — too short-sighted. |
-| 5 | 1e-4 | 0.99 | 32 | 0.5 | 0.10 | 0.10 | 13.00 | Lower eps_start — less early exploring, moderate result. |
-| 6 | 1e-4 | 0.99 | 32 | 1.0 | 0.10 | 0.05 | 18.00 | Short exploration still learned well. |
-| 7 | 1e-4 | 0.99 | 32 | 1.0 | 0.01 | 0.10 | 5.00 | Very low eps_end — under-explored, weak. |
-| 8 | 6.25e-5 | 0.99 | 32 | 1.0 | 0.10 | 0.10 | 6.33 | Lower lr — slow and unstable. |
-| 9 | 1e-4 | 0.99 | 64 | 1.0 | 0.05 | 0.20 | 15.33 | Bigger batch + longer explore — decent. |
-| 10 | 2.5e-4 | 0.98 | 64 | 1.0 | 0.10 | 0.15 | 22.00 | Combined moderate tweak — second best. |
+| Exp | lr      | gamma | batch | eps_start | eps_end | eps_fraction | Mean Reward     | Noted Behavior                                                   |
+| --- | ------- | ----- | ----- | --------- | ------- | ------------ | --------------- | ---------------------------------------------------------------- |
+| 1   | 1e-4    | 0.99  | 16    | 1.0       | 0.10    | 0.10         | 0.00            | Small batch + low lr — never learned to cross.                  |
+| 2   | 1e-4    | 0.99  | 128   | 1.0       | 0.10    | 0.10         | 18.00           | Large batch rescued the low lr — strong and stable.             |
+| 3   | 3e-4    | 0.99  | 32    | 1.0       | 0.10    | 0.10         | **24.67** | **Best overall.** Moderately higher lr was the sweet spot. |
+| 4   | 1e-4    | 0.90  | 32    | 1.0       | 0.10    | 0.10         | 0.00            | Much lower gamma — too short-sighted.                           |
+| 5   | 1e-4    | 0.99  | 32    | 0.5       | 0.10    | 0.10         | 13.00           | Lower eps_start — less early exploring, moderate result.        |
+| 6   | 1e-4    | 0.99  | 32    | 1.0       | 0.10    | 0.05         | 18.00           | Short exploration still learned well.                            |
+| 7   | 1e-4    | 0.99  | 32    | 1.0       | 0.01    | 0.10         | 5.00            | Very low eps_end — under-explored, weak.                        |
+| 8   | 6.25e-5 | 0.99  | 32    | 1.0       | 0.10    | 0.10         | 6.33            | Lower lr — slow and unstable.                                   |
+| 9   | 1e-4    | 0.99  | 64    | 1.0       | 0.05    | 0.20         | 15.33           | Bigger batch + longer explore — decent.                         |
+| 10  | 2.5e-4  | 0.98  | 64    | 1.0       | 0.10    | 0.15         | 22.00           | Combined moderate tweak — second best.                          |
 
 **Key insights (Nformi)**
 
@@ -117,18 +117,18 @@ Josue uses **version 2** as the main study. In v1 (100k steps), only high learni
 - doubling training to **200k** steps
 - changing gamma / batch / epsilon **on top of** a working lr
 
-| Exp | lr | gamma | batch | eps_start | eps_end | eps_fraction | Mean Reward | Noted Behavior |
-| --- | -- | ----- | ----- | --------- | ------- | ------------ | ----------- | -------------- |
-| 1 | 3e-4 | 0.99 | 32 | 1.0 | 0.10 | 0.10 | 0.00 | Same lr worked for CNN but failed for MLP. |
-| 2 | 5e-4 | 0.99 | 32 | 1.0 | 0.10 | 0.10 | **23.33** | **Best.** Same as v1 best lr, but higher with more steps. |
-| 3 | 1e-3 | 0.99 | 32 | 1.0 | 0.10 | 0.10 | 0.00 | Too aggressive for MLP — no learning. |
-| 4 | 7e-4 | 0.99 | 32 | 1.0 | 0.10 | 0.10 | **23.33** | Tied for best; more stable (low std). |
-| 5 | 5e-4 | 0.99 | 64 | 1.0 | 0.10 | 0.10 | 0.00 | One change (larger batch) collapsed learning. |
-| 6 | 5e-4 | 0.99 | 128 | 1.0 | 0.10 | 0.10 | 0.00 | Much larger batch — also collapsed. |
-| 7 | 5e-4 | 0.995 | 32 | 1.0 | 0.10 | 0.10 | 0.00 | Higher gamma at working lr — failed. |
-| 8 | 5e-4 | 0.99 | 32 | 1.0 | 0.05 | 0.10 | 0.00 | Lower eps_end — failed. |
-| 9 | 5e-4 | 0.99 | 32 | 1.0 | 0.10 | 0.20 | 0.00 | Longer exploration — failed. |
-| 10 | 3e-4 | 0.99 | 64 | 1.0 | 0.05 | 0.15 | 0.00 | Combo on 3e-4 base — no learning. |
+| Exp | lr   | gamma | batch | eps_start | eps_end | eps_fraction | Mean Reward     | Noted Behavior                                                  |
+| --- | ---- | ----- | ----- | --------- | ------- | ------------ | --------------- | --------------------------------------------------------------- |
+| 1   | 3e-4 | 0.99  | 32    | 1.0       | 0.10    | 0.10         | 0.00            | Same lr worked for CNN but failed for MLP.                      |
+| 2   | 5e-4 | 0.99  | 32    | 1.0       | 0.10    | 0.10         | **23.33** | **Best.** Same as v1 best lr, but higher with more steps. |
+| 3   | 1e-3 | 0.99  | 32    | 1.0       | 0.10    | 0.10         | 0.00            | Too aggressive for MLP — no learning.                          |
+| 4   | 7e-4 | 0.99  | 32    | 1.0       | 0.10    | 0.10         | **23.33** | Tied for best; more stable (low std).                           |
+| 5   | 5e-4 | 0.99  | 64    | 1.0       | 0.10    | 0.10         | 0.00            | One change (larger batch) collapsed learning.                   |
+| 6   | 5e-4 | 0.99  | 128   | 1.0       | 0.10    | 0.10         | 0.00            | Much larger batch — also collapsed.                            |
+| 7   | 5e-4 | 0.995 | 32    | 1.0       | 0.10    | 0.10         | 0.00            | Higher gamma at working lr — failed.                           |
+| 8   | 5e-4 | 0.99  | 32    | 1.0       | 0.05    | 0.10         | 0.00            | Lower eps_end — failed.                                        |
+| 9   | 5e-4 | 0.99  | 32    | 1.0       | 0.10    | 0.20         | 0.00            | Longer exploration — failed.                                   |
+| 10  | 3e-4 | 0.99  | 64    | 1.0       | 0.05    | 0.15         | 0.00            | Combo on 3e-4 base — no learning.                              |
 
 **Key insights (Josue)**
 
@@ -141,11 +141,11 @@ Josue uses **version 2** as the main study. In v1 (100k steps), only high learni
 
 ## CNN vs MLP
 
-| Policy | Best mean reward | Observation |
-| ------ | ---------------- | ----------- |
-| CnnPolicy (Nformi) | **24.67** | RGB pixels |
-| CnnPolicy (Kumi) | 22.00 | RGB pixels |
-| MlpPolicy (Josue v2) | 23.33 | RAM |
+| Policy               | Best mean reward | Observation |
+| -------------------- | ---------------- | ----------- |
+| CnnPolicy (Nformi)   | **24.67**  | RGB pixels  |
+| CnnPolicy (Kumi)     | 22.00            | RGB pixels  |
+| MlpPolicy (Josue v2) | 23.33            | RAM         |
 
 **CnnPolicy performed better overall.** Freeway needs spatial understanding (cars, lanes, chicken). A CNN learns from pixels. An MLP on RAM can work with a good lr, but it was less stable across small hyperparameter changes.
 
@@ -153,15 +153,15 @@ Josue uses **version 2** as the main study. In v1 (100k steps), only high learni
 
 ## Best Overall Model
 
-| Field | Value |
-| ----- | ----- |
-| Winner | Nformi Modestine — Experiment 3 |
-| Policy | CnnPolicy |
-| lr | 3e-4 |
-| gamma | 0.99 |
-| batch_size | 32 |
-| epsilon | 1.0 → 0.10, fraction 0.10 |
-| Mean reward | **24.67** |
+| Field       | Value                            |
+| ----------- | -------------------------------- |
+| Winner      | Nformi Modestine — Experiment 3 |
+| Policy      | CnnPolicy                        |
+| lr          | 3e-4                             |
+| gamma       | 0.99                             |
+| batch_size  | 32                               |
+| epsilon     | 1.0 → 0.10, fraction 0.10       |
+| Mean reward | **24.67**                  |
 
 Saved as:
 
@@ -181,10 +181,10 @@ Saved as:
 
 The video shows `play.py` running with the best model on Freeway (Greedy Q-policy).
 
-**Add your video here:**
+**video link:**
 
-- Place the file at: `video/freeway_play.mp4`
-- Or paste a YouTube / Drive link below.
+- Location: `video/freeway_play.mp4`
+- YouTube link: [https://youtu.be/YjOYt_grD0Y](https://youtu.be/YjOYt_grD0Y)
 
 Video link: *(add link after recording)*
 
@@ -192,18 +192,18 @@ Video link: *(add link after recording)*
 
 ## Project Files
 
-| File / folder | What it is |
-| ------------- | ---------- |
-| `train.py` | Trains DQN experiments for the team |
-| `run_josue_v2.py` | Josue's v2 MLP study (200k steps) |
-| `play.py` | Loads model and plays Freeway with GUI |
-| `requirements.txt` | Dependencies |
-| `dqn_model.zip` | Best overall trained model |
-| `all_experiments_summary.csv` | Combined results table |
-| `comparison_chart.png` | Results chart |
-| `runs_kumi_dqn/` | Kumi's runs and logs |
-| `runs_nformi_dqn/` | Nformi's runs and logs |
-| `runs_josue_v2/` | Josue's v2 runs and logs |
-| `best_overall_model/` | Best model + metadata |
+| File / folder                   | What it is                             |
+| ------------------------------- | -------------------------------------- |
+| `train.py`                    | Trains DQN experiments for the team    |
+| `run_josue_v2.py`             | Josue's v2 MLP study (200k steps)      |
+| `play.py`                     | Loads model and plays Freeway with GUI |
+| `requirements.txt`            | Dependencies                           |
+| `dqn_model.zip`               | Best overall trained model             |
+| `all_experiments_summary.csv` | Combined results table                 |
+| `comparison_chart.png`        | Results chart                          |
+| `runs_kumi_dqn/`              | Kumi's runs and logs                   |
+| `runs_nformi_dqn/`            | Nformi's runs and logs                 |
+| `runs_josue_v2/`              | Josue's v2 runs and logs               |
+| `best_overall_model/`         | Best model + metadata                  |
 
 Each experiment folder includes `episode_log.csv` (reward and episode length) and `run_metadata.json`.
