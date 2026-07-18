@@ -1,12 +1,12 @@
 """
-train.py — Train a DQN agent on ALE/Freeway-v5 using Stable Baselines3.
+train.py — Train DQN agents on ALE/Freeway-v5 using Stable Baselines3.
 
-Team members:
-  - Kumi Yunis:        CnnPolicy (10 experiments)  
-  - Nformi Modestine:  CnnPolicy (10 experiments)  
-  - Josue Byiringiro:  MlpPolicy (10 experiments)  
+Our team:
+  - Kumi Yunis:        CnnPolicy (10 experiments)
+  - Nformi Modestine:  CnnPolicy (10 experiments)
+  - Josue Byiringiro:  MlpPolicy (10 experiments)
 
-Saves the best model as dqn_model.zip in the project root.
+We save the best model as dqn_model.zip in the project root.
 """
 
 import os
@@ -32,22 +32,25 @@ from stable_baselines3.common.vec_env import VecFrameStack, VecMonitor
 
 @dataclass
 class HyperParams:
-    lr: float
-    gamma: float
-    batch_size: int
-    epsilon_start: float
-    epsilon_end: float
-    epsilon_fraction: float
+    """Holds one experiment's DQN settings that we tune as a team."""
+    lr: float                 # learning rate
+    gamma: float              # discount factor (how much we value future rewards)
+    batch_size: int           # experiences sampled per update
+    epsilon_start: float      # exploration at the start of training
+    epsilon_end: float        # exploration at the end of training
+    epsilon_fraction: float   # share of training spent decaying epsilon
 
 
 class EpisodeLoggerCallback(BaseCallback):
-    """Logs per-episode reward and length to a CSV file."""
+    """Saves reward and episode length so we can track training trends."""
+
     def __init__(self, csv_path: Path, verbose: int = 0):
         super().__init__(verbose)
         self.csv_path = csv_path
         self.rows = []
 
     def _on_step(self) -> bool:
+        """Record reward and length whenever an episode finishes."""
         for info in self.locals.get("infos", []):
             ep = info.get("episode")
             if ep is not None:
@@ -59,6 +62,7 @@ class EpisodeLoggerCallback(BaseCallback):
         return True
 
     def _on_training_end(self) -> None:
+        """Write all logged episodes to CSV when training ends."""
         self.csv_path.parent.mkdir(parents=True, exist_ok=True)
         with self.csv_path.open("w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=["timesteps", "reward", "episode_length"])
@@ -69,6 +73,7 @@ class EpisodeLoggerCallback(BaseCallback):
 # ─── Environment Utilities ───
 
 def _try_register_ale_envs() -> bool:
+    """Register Atari (ALE) games with Gymnasium if ale-py is installed."""
     try:
         ale_py = importlib.import_module("ale_py")
         if hasattr(gym, "register_envs"):
@@ -83,7 +88,7 @@ def _try_register_ale_envs() -> bool:
 
 
 def resolve_env_id(env_id: str) -> str:
-    """Use Freeway-v5, or fall back to a compatible env if needed."""
+    """Return Freeway-v5, or a compatible fallback if that env is missing."""
     candidates = [env_id]
     if env_id.startswith("ALE/") and env_id.endswith("-v5"):
         game = env_id.split("/", 1)[1].replace("-v5", "")
@@ -100,7 +105,10 @@ def resolve_env_id(env_id: str) -> str:
 
 
 def build_env(env_id, policy, n_envs, seed, frame_stack, render_mode=None):
-    """Create a vectorized Atari environment with appropriate wrappers."""
+    """
+    Build our training environment.
+    CnnPolicy uses RGB frames + frame stack; MlpPolicy uses RAM.
+    """
     if policy == "CnnPolicy":
         env = make_atari_env(
             env_id, n_envs=n_envs, seed=seed,
@@ -121,12 +129,13 @@ def build_env(env_id, policy, n_envs, seed, frame_stack, render_mode=None):
 
 def train_once(env_id, policy, hparams, total_timesteps, n_envs, frame_stack,
                seed, eval_freq, eval_episodes, device, run_dir):
-    """Train a single DQN experiment and return metadata dict."""
+    """Train one DQN run, evaluate it, and return our result metadata."""
     run_dir.mkdir(parents=True, exist_ok=True)
     train_env = build_env(env_id, policy, n_envs, seed, frame_stack)
     eval_env = build_env(env_id, policy, 1, seed + 100, frame_stack)
 
     episode_logger = EpisodeLoggerCallback(run_dir / "episode_log.csv")
+    # Periodically evaluate and keep the best checkpoint during training
     eval_callback = EvalCallback(
         eval_env,
         best_model_save_path=str(run_dir / "best"),
@@ -152,6 +161,7 @@ def train_once(env_id, policy, hparams, total_timesteps, n_envs, frame_stack,
                 progress_bar=True)
     model.save(run_dir / "dqn_model")
 
+    # Final greedy evaluation for our comparison table
     mean_reward, std_reward = evaluate_policy(
         model, eval_env, n_eval_episodes=eval_episodes, deterministic=True
     )
@@ -174,7 +184,7 @@ def run_member_experiments(member_name, experiments, policy, output_dir,
                            env_id="ALE/Freeway-v5", total_timesteps=100_000,
                            n_envs=4, frame_stack=4, seed=42,
                            eval_freq=100_000, eval_episodes=3, device="auto"):
-    """Run all 10 experiments for one group member and save results."""
+    """Run one member's 10 experiments and keep their best model."""
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     resolved = resolve_env_id(env_id)
@@ -206,6 +216,7 @@ def run_member_experiments(member_name, experiments, policy, output_dir,
         if best is None or metadata["mean_reward"] > best["mean_reward"]:
             best = {"mean_reward": metadata["mean_reward"], "run_dir": run_dir, "metadata": metadata}
 
+    # Save this member's summary table
     fieldnames = ["experiment", "member", "policy", "lr", "gamma", "batch_size",
                   "epsilon_start", "epsilon_end", "epsilon_fraction", "mean_reward", "std_reward"]
     with (output_dir / "summary.csv").open("w", newline="", encoding="utf-8") as f:
@@ -213,6 +224,7 @@ def run_member_experiments(member_name, experiments, policy, output_dir,
         writer.writeheader()
         writer.writerows(summary_rows)
 
+    # Copy this member's best model into their runs folder
     if best is not None:
         best_model = best["run_dir"] / "dqn_model.zip"
         if best_model.exists():
@@ -227,7 +239,7 @@ def run_member_experiments(member_name, experiments, policy, output_dir,
 # ─── Main ───
 
 if __name__ == "__main__":
-    # Global config
+    # Shared settings for our team's training runs
     ENV_ID = "ALE/Freeway-v5"
     TOTAL_TIMESTEPS = 100_000
     N_ENVS = 4
@@ -309,7 +321,7 @@ if __name__ == "__main__":
         eval_freq=EVAL_FREQ, eval_episodes=EVAL_EPISODES, device=DEVICE,
     )
 
-    # ─── Save best model (update when all members have run) ───
+    # Pick our team's overall best model across all members
     all_rows = kumi_rows + nformi_rows + josue_rows
     candidates = [
         ("Kumi_Yunis", kumi_best, "runs_kumi_dqn"),
@@ -323,6 +335,7 @@ if __name__ == "__main__":
     print(f"  Mean Reward: {winner_data['mean_reward']:.2f}")
     print(f"{'='*60}")
 
+    # Save the winning model for play.py and our submission
     winner_out = Path("best_overall_model")
     winner_out.mkdir(parents=True, exist_ok=True)
     src_model = Path(winner_dir) / "dqn_model.zip"
@@ -332,6 +345,7 @@ if __name__ == "__main__":
     with (winner_out / "best_model_metadata.json").open("w", encoding="utf-8") as f:
         json.dump(winner_data["metadata"], f, indent=2)
 
+    # Combined results for our README / presentation table
     with open("all_experiments_summary.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=list(all_rows[0].keys()))
         writer.writeheader()

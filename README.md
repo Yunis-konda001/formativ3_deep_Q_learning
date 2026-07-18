@@ -201,5 +201,6 @@ The video shows `play.py` running with the best model on Freeway (Greedy Q-polic
 | `runs_nformi_dqn/`            | Nformi's runs and logs                 |
 | `runs_josue_v2/`              | Josue's v2 runs and logs               |
 | `best_overall_model/`         | Best model + metadata                  |
+| `video/freeway_play.mp4`      | Gameplay video (`play.py` on Freeway)  |
 
 Each experiment folder includes `episode_log.csv` (reward and episode length) and `run_metadata.json`.
