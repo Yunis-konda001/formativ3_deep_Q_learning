@@ -1,0 +1,6 @@
+experiment,member,policy,lr,gamma,batch_size,epsilon_start,epsilon_end,epsilon_fraction,mean_reward,std_reward
+1,Josue_Byiringiro_v3,MlpPolicy,0.0005,0.99,32,1.0,0.1,0.1,6.666666507720947,1.2472190856933594
+2,Josue_Byiringiro_v3,MlpPolicy,0.0005,0.99,32,1.0,0.1,0.1,0.0,0.0
+3,Josue_Byiringiro_v3,MlpPolicy,0.0005,0.99,32,1.0,0.1,0.1,0.0,0.0
+4,Josue_Byiringiro_v3,MlpPolicy,0.0005,0.99,32,1.0,0.1,0.1,0.0,0.0
+5,Josue_Byiringiro_v3,MlpPolicy,0.0005,0.99,32,1.0,0.1,0.1,0.0,0.0
